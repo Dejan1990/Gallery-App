@@ -46,7 +46,7 @@
 		    </tr>
 			</tbody>
 		</table>
-        <edit :editrecord="records"></edit>
+        <edit :editrecord="records" @recordUpdated="recordUpdate"></edit>
 	</div>
 </template>
 <script type="text/javascript">
@@ -71,6 +71,9 @@
 				}).catch((error)=>{
 					alert('unable to to fetch data')
 				})
+			},
+            recordUpdate(response){
+				this.albums = response.data
 			},
         },
 	}

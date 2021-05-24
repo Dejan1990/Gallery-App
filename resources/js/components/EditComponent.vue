@@ -11,7 +11,7 @@
         </button>
       </div>
       <div class="modal-body">
-       <form enctype="multipart/form-data">
+       <form enctype="multipart/form-data" @submit.prevent="updateAlbum">
 			<div class="form-group">
 				<label>Name of Album</label>
 				<input type="text" name="name" class="form-control" maxlength="15" required="" v-model="editrecord.name">			
@@ -31,10 +31,10 @@
 			</div>
 			<div class="form-group">
 				<label>Image of Album</label>
-				<input type="file" name="image" class="form-control">
+				<input type="file" name="image" class="form-control" v-on:change="onImageChange">
 			</div>
 			<div class="form-group">
-				<button class="btn btn-secondary" type="submit">update Album</button>
+				<button class="btn btn-secondary" type="submit">Update Album</button>
 			</div>
 		</form>
       </div>
@@ -48,13 +48,18 @@ export default {
     props:['editrecord'],
     data() {
         return {
-            categories:[],
+            categories: [],
+            image: ''
         }
     },
     created() {
         this.getCategories();
     },
     methods: {
+        onImageChange(e){
+			console.log(e)
+			this.image = e.target.files[0];
+		},
         getCategories(){
 			axios.get('/api/categories').then((response)=>{
 				this.categories = response.data
@@ -62,6 +67,25 @@ export default {
 				alert('unable to fetch categories')
 			})
 		},
+        updateAlbum() {
+            const config = {
+				headers:{
+					"content-type":"multipart/form-data"
+				}
+			}
+			let formData = new FormData();
+			formData.append('image', this.image);
+			formData.append('name', this.editrecord.name);
+			formData.append('description', this.editrecord.description);
+			formData.append('category_id', this.editrecord.category_id);
+            formData.append("_method", "put");
+            axios.post('/albums/'+this.editrecord.id+'/edit', formData, config).then((response) => {
+                $('#exampleModal').modal('hide');
+                this.$emit('recordUpdated', response)
+            }).catch((error)=>{
+				console.log(error)
+			})
+        }
     },
 }
 </script>

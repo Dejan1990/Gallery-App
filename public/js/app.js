@@ -2157,6 +2157,34 @@ __webpack_require__.r(__webpack_exports__);
     },
     recordUpdate: function recordUpdate(response) {
       this.albums = response.data;
+    },
+    deleteRecord: function deleteRecord(id) {
+      var _this3 = this;
+
+      Swal.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes,delete it'
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]('/albums/' + id + '/delete').then(function (response) {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Your changes has been saved',
+              showConfirmButton: false,
+              timer: 1500
+            });
+            _this3.albums = response.data;
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
     }
   }
 });
@@ -38475,7 +38503,21 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm._m(3, true)
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.deleteRecord(album.id)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete")]
+                )
+              ])
             ])
           }),
           0
@@ -38537,14 +38579,6 @@ var staticRenderFns = [
       _c("a", { attrs: { href: "#" } }, [
         _c("button", { staticClass: "btn btn-success" }, [_vm._v("Upload")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("button", { staticClass: "btn btn-danger" }, [_vm._v("Delete")])
     ])
   }
 ]

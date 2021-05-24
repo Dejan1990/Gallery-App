@@ -41,7 +41,7 @@
 			    	</button>
 		        </td>
 		        <td>
-		        	<button class="btn btn-danger">Delete</button>
+		        	<button @click.prevent="deleteRecord(album.id)" class="btn btn-danger">Delete</button>
 		        </td>
 		    </tr>
 			</tbody>
@@ -75,6 +75,33 @@
             recordUpdate(response){
 				this.albums = response.data
 			},
+            deleteRecord(id){
+                Swal.fire({
+					title: 'Are you sure?',
+					icon: 'warning',
+					text:"You won't be able to revert this!",
+					showCancelButton:true,
+					confirmButtonColor:'#d33',
+					cancelButtonColor:'#3085d6',
+					confirmButtonText:'Yes,delete it'
+				}).then((result) => {
+					if(result.value){
+						axios.delete('/albums/'+id+'/delete').then((response) => {
+							Swal.fire({
+						  	position: 'center',
+						  	icon: 'success',
+						 	title: 'Your changes has been saved',
+						 	showConfirmButton: false,
+						  	timer: 1500
+							})
+							this.albums = response.data
+						}).catch((error) => {
+					        console.log(error)
+				        })
+					}
+
+				})
+            }
         },
 	}
 </script>

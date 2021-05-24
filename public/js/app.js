@@ -1881,6 +1881,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -1890,7 +1902,8 @@ __webpack_require__.r(__webpack_exports__);
       image: '',
       categories: [],
       albumId: '',
-      success: false
+      success: false,
+      allerrors: []
     };
   },
   created: function created() {
@@ -1930,6 +1943,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.success = true;
       })["catch"](function (error) {
         console.log(error);
+        _this2.allerrors = error.response.data.errors;
       });
     }
   }
@@ -37628,7 +37642,17 @@ var render = function() {
                     _vm.name = $event.target.value
                   }
                 }
-              })
+              }),
+              _vm._v(" "),
+              _vm.allerrors.name
+                ? _c("span", { class: ["danger"] }, [
+                    _vm._v(
+                      "\n\t\t\t\t\t" +
+                        _vm._s(_vm.allerrors.name[0]) +
+                        "\n\t\t\t\t"
+                    )
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -37654,7 +37678,17 @@ var render = function() {
                     _vm.description = $event.target.value
                   }
                 }
-              })
+              }),
+              _vm._v(" "),
+              _vm.allerrors.description
+                ? _c("span", { class: ["danger"] }, [
+                    _vm._v(
+                      "\n\t\t\t\t\t" +
+                        _vm._s(_vm.allerrors.description[0]) +
+                        "\n\t\t\t\t"
+                    )
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -37689,20 +37723,32 @@ var render = function() {
                     }
                   }
                 },
-                _vm._l(_vm.categories, function(category, index) {
-                  return _c(
-                    "option",
-                    { key: index, domProps: { value: category.id } },
-                    [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(category.name) +
-                          "\n                    "
-                      )
-                    ]
-                  )
-                }),
-                0
+                [
+                  _vm._l(_vm.categories, function(category, index) {
+                    return _c(
+                      "option",
+                      { key: index, domProps: { value: category.id } },
+                      [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(category.name) +
+                            "\n                    "
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _vm.allerrors.category
+                    ? _c("span", { class: ["danger"] }, [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t" +
+                            _vm._s(_vm.allerrors.category[0]) +
+                            "\n\t\t\t\t\t"
+                        )
+                      ])
+                    : _vm._e()
+                ],
+                2
               )
             ]),
             _vm._v(" "),
@@ -37713,7 +37759,17 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: { type: "file", name: "image" },
                 on: { change: _vm.onImageChange }
-              })
+              }),
+              _vm._v(" "),
+              _vm.allerrors.image
+                ? _c("span", { class: ["danger"] }, [
+                    _vm._v(
+                      "\n\t\t\t\t\t" +
+                        _vm._s(_vm.allerrors.image[0]) +
+                        "\n\t\t\t\t"
+                    )
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _vm._m(0)

@@ -4,10 +4,16 @@
 			<div class="form-group">
 				<label>Name of Album</label>
 				<input type="text" name="name" v-model="name" class="form-control" maxlength="15">
+				<span v-if="allerrors.name" :class="['danger']">
+					{{ allerrors.name[0] }}
+				</span>
 			</div>
 			<div class="form-group">
 				<label>Description of Album</label>
 				<textarea class="form-control"  maxlength="200" name="description" v-model="description"></textarea>
+				<span v-if="allerrors.description" :class="['danger']">
+					{{ allerrors.description[0] }}
+				</span>
 			</div>
 			<div class="form-group">
 				<label>Category of Album</label>
@@ -17,13 +23,19 @@
                         :key="index" 
                         :value="category.id"
                     >
-                        {{category.name}}
+                        {{ category.name }}
                     </option>
+					<span v-if="allerrors.category" :class="['danger']">
+						{{ allerrors.category[0] }}
+					</span>
 				</select>
 			</div>
 			<div class="form-group">
 				<label>Image of Album</label>
 				<input type="file" name="image" class="form-control" v-on:change="onImageChange">
+				<span v-if="allerrors.image" :class="['danger']">
+					{{ allerrors.image[0] }}
+				</span>
 			</div>
 			<div class="form-group">
 				<button class="btn btn-secondary" type="submit">Create Album</button>
@@ -45,6 +57,7 @@
 				categories: [],
                 albumId: '',
                 success:false,
+				allerrors:[]
 			}
 		},
 		created() {
@@ -83,6 +96,7 @@
 					this.success = true
 				}).catch((error)=>{
 					console.log(error)
+					this.allerrors = error.response.data.errors
 				})
 			}
 		}

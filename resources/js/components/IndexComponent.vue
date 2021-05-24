@@ -36,7 +36,7 @@
                     </a>
 		        </td>
 		        <td>
-		      		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+		      		<button @click.prevent="edit(album.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
  					 Edit
 			    	</button>
 		        </td>
@@ -46,15 +46,15 @@
 		    </tr>
 			</tbody>
 		</table>
+        <edit :editrecord="records"></edit>
 	</div>
 </template>
-
-
 <script type="text/javascript">
 	export default{
 		data(){
 			return{
-				albums:[]
+				albums:[],
+				records:[],
 			}
 		},
 		created(){
@@ -64,5 +64,14 @@
                 console.log(error);
             })
 		},
+        methods: {
+            edit(id){
+				axios.get('/api/albums/'+id).then((response) => {
+					this.records = response.data
+				}).catch((error)=>{
+					alert('unable to to fetch data')
+				})
+			},
+        },
 	}
 </script>

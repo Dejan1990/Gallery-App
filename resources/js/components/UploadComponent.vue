@@ -7,6 +7,7 @@
             <a class="btn btn-secondary" @click.prevent="submitFiles()">Upload</a>
         </div>
     </form>
+    <progress max="100" style="width: 100%;" :value.prop="uploadPercentage" v-if="uploading"></progress>
 </div>
 </template>
 
@@ -14,16 +15,13 @@
 export default {
     data() {
         return {
-            album_id: 1
+            album_id: 1,
+            uploadPercentage: '',
+			uploading: false,
         }
     },
     methods: {
         submitFiles() {
-            const config = {
-                headers: {
-                    "content-type": "multipart/form-data"
-                }
-            }
             let formData = new FormData();
             for (var i = 0; i < this.$refs.file.files.length; i++) { //this.$refs.file.files.length gives total length of images
                 let file = this.$refs.file.files[i];
@@ -32,7 +30,15 @@ export default {
             }
             this.uploading = true;
             this.$refs.file.value = ''
-            axios.post('/uploadImages', formData, config).then((response) => {
+            axios.post('/uploadImages', formData, {
+                headers: {
+                    "content-type": "multipart/form-data"
+                },
+                onUploadProgress:function(progressEvent){
+					this.uploadPercentage = parseInt(Math.round((progressEvent.loaded*100)/progressEvent.total));
+				}.bind(this)
+
+            }).then((response) => {
 
             })
         },

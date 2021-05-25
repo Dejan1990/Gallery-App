@@ -2214,19 +2214,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      album_id: 1
+      album_id: 1,
+      uploadPercentage: '',
+      uploading: false
     };
   },
   methods: {
     submitFiles: function submitFiles() {
-      var config = {
-        headers: {
-          "content-type": "multipart/form-data"
-        }
-      };
       var formData = new FormData();
 
       for (var i = 0; i < this.$refs.file.files.length; i++) {
@@ -2238,7 +2236,14 @@ __webpack_require__.r(__webpack_exports__);
 
       this.uploading = true;
       this.$refs.file.value = '';
-      axios.post('/uploadImages', formData, config).then(function (response) {});
+      axios.post('/uploadImages', formData, {
+        headers: {
+          "content-type": "multipart/form-data"
+        },
+        onUploadProgress: function (progressEvent) {
+          this.uploadPercentage = parseInt(Math.round(progressEvent.loaded * 100 / progressEvent.total));
+        }.bind(this)
+      }).then(function (response) {});
     }
   }
 });
@@ -38759,7 +38764,15 @@ var render = function() {
           )
         ]
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _vm.uploading
+      ? _c("progress", {
+          staticStyle: { width: "100%" },
+          attrs: { max: "100" },
+          domProps: { value: _vm.uploadPercentage }
+        })
+      : _vm._e()
   ])
 }
 var staticRenderFns = []

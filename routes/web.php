@@ -32,6 +32,6 @@ Route::put('/albums/{id}/edit', [AlbumController::class, 'update'])->middleware(
 Route::delete('/albums/{id}/delete', [AlbumController::class, 'destroy'])->middleware('auth');
 Route::get('/getalbums', [AlbumController::class, 'getAlbums'])->middleware('auth');
 
-Route::get('/upload/images', [GalleryController::class, 'create'])->middleware('auth');
+Route::get('/upload/images/{id}', [GalleryController::class, 'create'])->middleware('auth');
 Route::post('/uploadImages', [GalleryController::class, 'upload'])->middleware('auth');
 

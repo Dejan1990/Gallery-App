@@ -2216,9 +2216,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['album_id'],
   data: function data() {
     return {
-      album_id: 1,
       uploadPercentage: '',
       uploading: false
     };
@@ -38297,7 +38297,7 @@ var render = function() {
     _vm._v(" "),
     _vm.success
       ? _c("div", [
-          _c("a", { attrs: { href: "/gallery/" + _vm.albumId } }, [
+          _c("a", { attrs: { href: "/upload/images/" + _vm.albumId } }, [
             _vm._v(
               "Your album is created. Please click the link to upload the images"
             )
@@ -38612,7 +38612,13 @@ var render = function() {
               _vm._v(" "),
               _vm._m(1, true),
               _vm._v(" "),
-              _vm._m(2, true),
+              _c("td", [
+                _c("a", { attrs: { href: "/upload/images/" + album.id } }, [
+                  _c("button", { staticClass: "btn btn-success" }, [
+                    _vm._v("Upload")
+                  ])
+                ])
+              ]),
               _vm._v(" "),
               _c("td", [
                 _c(
@@ -38700,16 +38706,6 @@ var staticRenderFns = [
         _c("button", { staticClass: "btn btn-info" }, [
           _vm._v("\n\t\t        \t\t\tView\n\t\t        \t\t")
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("button", { staticClass: "btn btn-success" }, [_vm._v("Upload")])
       ])
     ])
   }

@@ -31,9 +31,9 @@
 		        	</a>
 		        </td>
 		        <td>
-		        	<a href="#">
+		        	<a :href="'/upload/images/'+album.id">
 		        		<button class="btn btn-success">Upload</button>
-                    </a>
+					</a>
 		        </td>
 		        <td>
 		      		<button @click.prevent="edit(album.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">

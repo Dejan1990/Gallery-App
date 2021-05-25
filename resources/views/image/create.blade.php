@@ -8,7 +8,7 @@
                 <div class="card-header">Dashboard</div>
 
                 <div class="card-body">
-                   <upload></upload>
+                   <upload :album_id="{{ $album_id }}"></upload>
                 </div>
             </div>
         </div>

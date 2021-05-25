@@ -8,13 +8,25 @@ use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
-    public function create()
+    public function create($id)
     {
-        return view('image.create');
+        $albumBelongsToUser = Album::where('user_id', auth()->user()->id)->where('id', $id)->exists();
+        if($albumBelongsToUser){
+            $album_id = $id;
+            session()->put('id', $id);
+            return view('image.create', compact('album_id'));
+        }else{
+            return back();
+        }
     }
 
     public function upload(Request $request)
     {
+        $this->validate($request, [
+            'files'=>'required',
+            'files.*'=>'mimes:png,jpeg,jpg'
+        ]);
+
         foreach($request->file('files') as $file){
 
     		$name = $file->hashName();

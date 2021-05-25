@@ -36,4 +36,5 @@ Route::get('/upload/images/{id}', [GalleryController::class, 'create'])->middlew
 Route::post('/uploadImages', [GalleryController::class, 'upload'])->middleware('auth');
 Route::get('/getimages', [GalleryController::class, 'images'])->middleware('auth');
 Route::delete('/image/{id}', [GalleryController::class, 'destroy']);
+Route::get('/albums/{slug}/{id}', [GalleryController::class, 'viewAlbum'])->name('view.album');
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Album;
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GalleryController extends Controller
 {
@@ -50,4 +52,10 @@ class GalleryController extends Controller
         $image = Image::find($id);
         return $image->delete();
     }
+
+    public function viewAlbum($slug, $id)
+    {
+        $albums = Album::with('albumimages')->where('slug', $slug)->where('id', $id)->get();
+        return view('album.show', compact('albums'));
+     }
 }

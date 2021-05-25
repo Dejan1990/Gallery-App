@@ -24,7 +24,7 @@
 		        <td>{{ album.description }}</td>
 		        <td>{{ album.category.name }}</td>
 		        <td>
-		        	<a href="#">
+		        	<a :href="'/albums/'+album.slug+'/'+album.id">
 		        		<button class="btn btn-info">
 		        			View
 		        		</button>

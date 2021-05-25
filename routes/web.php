@@ -33,5 +33,5 @@ Route::delete('/albums/{id}/delete', [AlbumController::class, 'destroy'])->middl
 Route::get('/getalbums', [AlbumController::class, 'getAlbums'])->middleware('auth');
 
 Route::get('/upload/images', [GalleryController::class, 'create'])->middleware('auth');
-Route::post('uploadImages', [GalleryController::class, 'upload'])->middleware('auth');
+Route::post('/uploadImages', [GalleryController::class, 'upload'])->middleware('auth');
 

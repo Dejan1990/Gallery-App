@@ -2213,13 +2213,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {};
+    return {
+      album_id: 1
+    };
   },
   methods: {
     submitFiles: function submitFiles() {
-      alert('OK');
+      var config = {
+        headers: {
+          "content-type": "multipart/form-data"
+        }
+      };
+      var formData = new FormData();
+
+      for (var i = 0; i < this.$refs.file.files.length; i++) {
+        //this.$refs.file.files.length gives total length of images
+        var file = this.$refs.file.files[i];
+        formData.append('files[' + i + ']', file);
+        formData.append('album_id', this.album_id);
+      }
+
+      this.uploading = true;
+      this.$refs.file.value = '';
+      axios.post('/uploadImages', formData, config).then(function (response) {});
     }
   }
 });

@@ -64,6 +64,36 @@ export default {
                 alert('error')
             })
         },
+        DeleteImage(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                text: "You won't be able to revert this!",
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes,delete it'
+
+            }).then((result) => {
+
+                if (result.value) {
+                    axios.delete('/image/' + id).then((response) => {
+                        this.getImage()
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Your chnages has been saved',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+                }
+
+            })
+        }
     },
 }
 </script>

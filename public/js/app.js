@@ -2272,6 +2272,35 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         alert('error');
       });
+    },
+    DeleteImage: function DeleteImage(id) {
+      var _this3 = this;
+
+      Swal.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes,delete it'
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]('/image/' + id).then(function (response) {
+            _this3.getImage();
+
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Your chnages has been saved',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
     }
   }
 });

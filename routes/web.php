@@ -29,6 +29,7 @@ Route::delete('/image/{id}', [GalleryController::class, 'destroy']);
 Route::get('/albums/{slug}/{id}', [GalleryController::class, 'viewAlbum'])->name('view.album');
 
 Route::post('/follow', [FollowController::class, 'followUnfollow'])->middleware('auth');
+Route::get('/profile', [FollowController::class, 'profile'])->name('profile')->middleware('auth');
 
 
 

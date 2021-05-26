@@ -21,7 +21,7 @@ class FrontendController extends Controller
         if(Auth::check()){
             $userId = $id;
             $follows = (new User)->amIfollowing($userId);
-         }
+        }
         return view('user-album', compact('albums', 'userId', 'follows'));
     }
 }

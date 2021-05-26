@@ -60,8 +60,9 @@ class GalleryController extends Controller
         if(Auth::check()){
              $userId  = Album::where('id',$id)->first()->user_id;
              $follows = (new User)->amIfollowing($userId);
+             return view('album.show',compact('albums', 'follows','userId'));
          }
  
-         return view('album.show',compact('albums','follows','userId'));
+         return view('album.show',compact('albums'));
      }
 }

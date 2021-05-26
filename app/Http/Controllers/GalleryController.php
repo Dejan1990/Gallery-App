@@ -53,11 +53,15 @@ class GalleryController extends Controller
         return $image->delete();
     }
 
-    public function viewAlbum($slug, $id)
-    {
-        $albums = Album::with('albumimages')->where('slug', $slug)->where('id', $id)->get();
-        $userId  = Album::where('id', $id)->first()->user_id;
-        $follows = (new User)->amIfollowing($userId); // vraca true or false
-        return view('album.show', compact('albums', 'follows', 'userId'));
+    public function viewAlbum($slug,$id){
+        
+        $albums = Album::with('albumimages')->where('slug',$slug)->where('id',$id)->get();
+ 
+        if(Auth::check()){
+             $userId  = Album::where('id',$id)->first()->user_id;
+             $follows = (new User)->amIfollowing($userId);
+         }
+ 
+         return view('album.show',compact('albums','follows','userId'));
      }
 }

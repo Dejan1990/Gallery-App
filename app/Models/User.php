@@ -51,7 +51,7 @@ class User extends Authenticatable
     public function amIfollowing($userId)
     {
         return DB::table('followers')
-                ->where('follower_id', auth()->user()->id)
+                ->where('follower_id', auth()->user()->id) // Ovo ce da pravi problem, kada smo neidentifikovani
                 ->where('following_id', $userId)
                 ->exists(); //vraca true or false
     }

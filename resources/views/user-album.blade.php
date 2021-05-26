@@ -6,7 +6,7 @@
 
         <br><br>
 
-        @if (auth()->user()->id != $userId)
+        @if (Auth::check() && auth()->user()->id != $userId)
             <follow user-id="{{ $userId }}" follows="{{ $follows }}"></follow>
         @endif
 

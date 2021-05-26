@@ -2083,7 +2083,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['userId', 'follows'],
+  data: function data() {
+    return {
+      status: this.follows // vraca true or false
+
+    };
+  },
+  methods: {
+    followUser: function followUser() {
+      var _this = this;
+
+      axios.post('/follow', {
+        userId: this.userId
+      }).then(function (response) {
+        _this.status = !_this.status; //menjamo status
+      })["catch"](function (error) {
+        alert('error');
+      });
+    }
+  },
+  computed: {
+    buttonText: function buttonText() {
+      return this.status ? 'Unfollow' : 'Follow';
+    }
+  }
+});
 
 /***/ }),
 
@@ -38730,7 +38757,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Follow\n")])
+  return _c("div", [
+    _c("button", {
+      staticClass: "btn btn-primary ml-4",
+      domProps: { textContent: _vm._s(_vm.buttonText) },
+      on: {
+        click: function($event) {
+          $event.preventDefault()
+          return _vm.followUser($event)
+        }
+      }
+    })
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

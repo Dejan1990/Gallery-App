@@ -6,6 +6,10 @@
 
         <br><br>
 
+        @if (auth()->user()->id != $userId)
+            <follow user-id="{{ $userId }}" follows="{{ $follows }}"></follow>
+        @endif
+
         <div class="row">
             @foreach ($albums as $album)
 
@@ -18,7 +22,8 @@
                                 <center>{{ $album->name }}</center>
                             </h5>
                             <center>
-                                <a href="{{ route('view.album', [$album->slug, $album->id]) }}" class="btn btn-primary">View
+                                <a href="{{ route('view.album', [$album->slug, $album->id]) }}"
+                                    class="btn btn-primary">View
                                     Album</a>
                             </center>
                         </div>

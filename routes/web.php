@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\GalleryController;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,8 @@ Route::post('/uploadImages', [GalleryController::class, 'upload'])->middleware('
 Route::get('/getimages', [GalleryController::class, 'images'])->middleware('auth');
 Route::delete('/image/{id}', [GalleryController::class, 'destroy']);
 Route::get('/albums/{slug}/{id}', [GalleryController::class, 'viewAlbum'])->name('view.album');
+
+Route::post('/follow', [FollowController::class, 'followUnfollow'])->middleware('auth');
 
 
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 Auth::routes();
 
 Route::get('/', [FrontendController::class, 'index']);
+Route::get('/user/profile/{id}', [FrontendController::class, 'userAlbum'])->name('user.album');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -25,4 +26,6 @@ Route::post('/uploadImages', [GalleryController::class, 'upload'])->middleware('
 Route::get('/getimages', [GalleryController::class, 'images'])->middleware('auth');
 Route::delete('/image/{id}', [GalleryController::class, 'destroy']);
 Route::get('/albums/{slug}/{id}', [GalleryController::class, 'viewAlbum'])->name('view.album');
+
+
 

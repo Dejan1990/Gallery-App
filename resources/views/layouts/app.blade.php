@@ -42,7 +42,10 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <a class="navbar-brand" href="{{ url('/albums') }}">My Album</a>
+                        @if(Auth::check())
+                            <a class="navbar-brand" href="{{ route('user.album', auth()->user()->id) }}">My Album</a>
+                            <a class="navbar-brand" href="{{ url('/albums') }}">My Dashboard</a>
+                        @endif
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">

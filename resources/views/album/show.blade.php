@@ -21,6 +21,11 @@
         <div class="card-body">
             @foreach($albums as $album)
                 <p>
+                    Created By:<a href="{{route('user.album',[$album->user_id])}}">
+                        {{$album->user->name}}
+                    </a>
+                </p>
+                <p>
                     <h2>{{ $album->name }}</h2>
                 </p>
                 <p>{{ $album->description }}</p>

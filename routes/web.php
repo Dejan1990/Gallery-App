@@ -30,8 +30,10 @@ Route::get('/albums/{slug}/{id}', [GalleryController::class, 'viewAlbum'])->name
 
 Route::post('/follow', [FollowController::class, 'followUnfollow'])->middleware('auth');
 Route::get('/profile', [FollowController::class, 'profile'])->name('profile')->middleware('auth');
-Route::get('/user/{id}', [[FollowController::class, 'userProfilePic']])->middleware('auth');
-Route::post('/profile-pic', [[FollowController::class, 'updateProfilePic']])->middleware('auth');
+Route::get('/user/{id}', [FollowController::class, 'userProfilePic'])->middleware('auth');
+Route::post('/profile-pic', [FollowController::class, 'updateProfilePic'])->middleware('auth');
+Route::post('/bg-pic', [FollowController::class, 'updatebgPic'])->middleware('auth');
+Route::get('/user/bg/{id}', [FollowController::class, 'userbgPic'])->middleware('auth');
 
 
 

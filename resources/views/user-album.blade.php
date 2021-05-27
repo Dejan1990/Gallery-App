@@ -2,7 +2,13 @@
 
 @section('content')
     <div class="container">
-        <img src="{{ asset('banner') }}/banner.jpg" style="width: 100%;">
+        @if ($userBgPic)
+            <img src="{{ Storage::url($userBgPic) }}" style="width: 100%;">
+
+        @else
+            <img src="{{ asset('banner') }}/banner.jpg" style="width: 100%;">
+
+        @endif
 
         <br><br>
 

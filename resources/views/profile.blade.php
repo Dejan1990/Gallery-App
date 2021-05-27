@@ -43,7 +43,7 @@
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="profilepic">
 
-                                
+                                <avatar userid="{{ auth()->user()->id }}"></avatar>
 
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="bgpic">

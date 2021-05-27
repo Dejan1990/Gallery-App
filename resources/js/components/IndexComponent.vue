@@ -46,6 +46,7 @@
 		    </tr>
 			</tbody>
 		</table>
+		<pagination></pagination>
         <edit :editrecord="records" @recordUpdated="recordUpdate"></edit>
 	</div>
 </template>
@@ -59,7 +60,7 @@
 		},
 		created(){
 			axios.get('/getalbums').then((response) => {
-                this.albums = response.data
+                this.albums = response.data.data
             }).catch((error) => {
                 console.log(error);
             })

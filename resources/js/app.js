@@ -10,6 +10,7 @@ Vue.component('upload', require('./components/UploadComponent.vue').default);
 Vue.component('follow', require('./components/FollowComponent.vue').default);
 Vue.component('avatar', require('./components/AvatarComponent.vue').default);
 Vue.component('bg', require('./components/BackgroundPictureComponent.vue').default);
+Vue.component('pagination', require('./components/PaginationComponent.vue').default);
 
 const app = new Vue({
     el: '#app',

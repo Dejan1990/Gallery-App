@@ -12,6 +12,7 @@ Auth::routes();
 
 Route::get('/', [FrontendController::class, 'index']);
 Route::get('/user/profile/{id}', [FrontendController::class, 'userAlbum'])->name('user.album');
+Route::get('/{id}/category', [FrontendController::class, 'albumCategory'])->name('album.category');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 

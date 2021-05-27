@@ -2344,23 +2344,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       albums: [],
-      records: []
+      records: [],
+      meta: {}
     };
   },
   created: function created() {
-    var _this = this;
-
-    axios.get('/getalbums').then(function (response) {
-      _this.albums = response.data.data;
-    })["catch"](function (error) {
-      console.log(error);
-    });
+    this.getAlbums();
   },
   methods: {
+    getAlbums: function getAlbums(page) {
+      var _this = this;
+
+      axios.get('/getalbums', {
+        params: {
+          page: page
+        }
+      }).then(function (response) {
+        _this.albums = response.data.data;
+        _this.meta = response.data.meta;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     edit: function edit(id) {
       var _this2 = this;
 
@@ -2429,7 +2439,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['meta'],
+  data: function data() {
+    return {};
+  },
+  methods: {
+    changePage: function changePage(page) {
+      if (page <= 0 || page > this.meta.last_page) {
+        return;
+      }
+
+      this.$emit('pagination', page);
+    }
+  }
+});
 
 /***/ }),
 
@@ -39381,7 +39408,9 @@ var render = function() {
                   { attrs: { href: "/albums/" + album.slug + "/" + album.id } },
                   [
                     _c("button", { staticClass: "btn btn-info" }, [
-                      _vm._v("\n\t\t        \t\t\tView\n\t\t        \t\t")
+                      _vm._v(
+                        "\r\n                            View\r\n                        "
+                      )
                     ])
                   ]
                 )
@@ -39412,7 +39441,11 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("\n \t\t\t\t\t Edit\n\t\t\t    \t")]
+                  [
+                    _vm._v(
+                      "\r\n                        Edit\r\n                    "
+                    )
+                  ]
                 )
               ]),
               _vm._v(" "),
@@ -39437,7 +39470,10 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("pagination"),
+      _c("pagination", {
+        attrs: { meta: _vm.meta },
+        on: { pagination: _vm.getAlbums }
+      }),
       _vm._v(" "),
       _c("edit", {
         attrs: { editrecord: _vm.records },
@@ -39497,48 +39533,84 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
-      _c("ul", { staticClass: "pagination" }, [
-        _c("li", { staticClass: "page-item" }, [
-          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-            _vm._v("Previous")
-          ])
-        ]),
+  return _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+    _c(
+      "ul",
+      { staticClass: "pagination" },
+      [
+        _c(
+          "li",
+          {
+            staticClass: "page-item",
+            class: { disabled: _vm.meta.current_page === 1 }
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.changePage(_vm.meta.current_page - 1)
+                  }
+                }
+              },
+              [_vm._v("Previous")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _vm._l(_vm.meta.last_page, function(p) {
+          return _c(
+            "li",
+            {
+              staticClass: "page-item",
+              class: { active: _vm.meta.current_page === p }
+            },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "page-link",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.changePage(p)
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(p))]
+              )
+            ]
+          )
+        }),
         _vm._v(" "),
         _c("li", { staticClass: "page-item" }, [
-          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-            _vm._v("1")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "page-item" }, [
-          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-            _vm._v("2")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "page-item" }, [
-          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-            _vm._v("3")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "page-item" }, [
-          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-            _vm._v("Next")
-          ])
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              class: { disabled: _vm.meta.current_page === _vm.meta.last_page },
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.changePage(_vm.meta.current_page + 1)
+                }
+              }
+            },
+            [_vm._v("Next")]
+          )
         ])
-      ])
-    ])
-  }
-]
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
